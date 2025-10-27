@@ -1,0 +1,22 @@
+name: bigdata_at3
+version: 1.0.0
+config-version: 2
+
+profile: default
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+
+models:
+  bigdata_at3:
+    +schema: silver         # default schema for this project
+    silver:
+      +materialized: table  # all silver models are physical tables
+
+    gold:
+      +schema: gold         # gold models go into a different schema
+      +materialized: view   # gold layer is required to be views (not tables)
+
+snapshots:
+  bigdata_at3:
+    +target_schema: silver_snapshots
