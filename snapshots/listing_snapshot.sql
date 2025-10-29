@@ -7,23 +7,26 @@
     updated_at='scraped_date'
   )
 }}
+
+-- Listing-level slowly changing dimension (SCD 2)
 select
-  listing_id,
-  host_id,
-  property_type,
-  room_type,
-  accommodates,
-  price,
-  listing_neighbourhood,
-  has_availability,
-  availability_30,
-  number_of_reviews,
-  review_scores_rating,
-  review_scores_accuracy,
-  review_scores_cleanliness,
-  review_scores_checkin,
-  review_scores_communication,
-  review_scores_value,
-  scraped_date
-from {{ ref('dim_listing') }}
+    l.listing_id,
+    l.host_id,
+    l.property_type,
+    l.room_type,
+    l.accommodates,
+    l.price,
+    l.listing_neighbourhood,
+    l.has_availability,
+    l.availability_30,
+    l.number_of_reviews,
+    l.review_scores_rating,
+    l.review_scores_accuracy,
+    l.review_scores_cleanliness,
+    l.review_scores_checkin,
+    l.review_scores_communication,
+    l.review_scores_value,
+    l.scraped_date
+from {{ ref('dim_listing') }} l
+
 {% endsnapshot %}

@@ -1,7 +1,7 @@
+-- Cumulative fact across all months; no date filtering
 with
-src as (select * from {{ ref('stg_airbnb_2020_05') }}),
-d_host as (select * from {{ ref('dim_host') }}),
-d_list as (select * from {{ ref('dim_neighbourhood') }})
+s as (select * from {{ ref('stg_airbnb') }}),
+dn as (select * from {{ ref('dim_neighbourhood') }})
 select
   s.listing_id,
   s.host_id,
@@ -22,5 +22,6 @@ select
   s.review_scores_value,
   s.listing_neighbourhood,
   dn.lga_code as lga_code_from_suburb
-from src s
-left join d_list dn on lower(s.listing_neighbourhood) = lower(dn.suburb_name)
+from s
+left join dn
+  on lower(s.listing_neighbourhood) = lower(dn.suburb_name)

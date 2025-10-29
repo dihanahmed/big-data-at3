@@ -1,4 +1,4 @@
-with src as (select * from {{ ref('stg_airbnb_2020_05') }})
+with src as (select * from {{ ref('stg_airbnb') }})
 select
   listing_id,
   host_id,
