@@ -1,9 +1,9 @@
-with nb as (select * from {{ ref('stg_nsw_lga_suburb') }}),
-lg as (select * from {{ ref('stg_nsw_lga_code') }})
+-- One row per suburb with its LGA code/name
+with code as (select * from {{ ref('stg_nsw_lga_code') }}),
+suburb as (select * from {{ ref('stg_nsw_lga_suburb') }})
 select
-  nb.suburb_name,
-  nb.lga_name,
-  lg.lga_code
-from nb
-left join lg on lower(nb.lga_name) = lower(lg.lga_name)
-where nb.suburb_name is not null
+  c.lga_code,
+  c.lga_name,
+  s.suburb_name
+from code c
+left join suburb s on lower(c.lga_name) = lower(s.lga_name)
